@@ -2,6 +2,8 @@ extends Node2D
 
 var roll_button : Button
 
+var scorecard : ItemList
+
 var die1 : Node2D
 var die2 : Node2D 
 var die3 : Node2D
@@ -23,16 +25,17 @@ var die6_sprite = preload("res://Sprites/die6.png")
 
 func _ready():
 	roll_button = find_child("RollButton")
+	scorecard = $"../Container/ItemList2"
 	die1 = find_child("Die1")
 	die2 = find_child("Die2")
 	die3 = find_child("Die3")
 	die4 = find_child("Die4")
 	die5 = find_child("Die5")
-	die1_i = 1
-	die2_i = 1
-	die3_i = 1
-	die4_i = 1
-	die5_i = 1
+	die1_i = 0
+	die2_i = 0
+	die3_i = 0
+	die4_i = 0
+	die5_i = 0
 
 func _on_roll_button_pressed():
 	var i = 1
@@ -41,3 +44,19 @@ func _on_roll_button_pressed():
 			set("die" + str(i) + "_i", randi_range(1, 6))
 			get("die" + str(i)).find_child("Sprite2D").texture = get("die" + str(get("die" + str(i) + "_i")) + "_sprite")
 		i += 1
+	update_scorecard()
+	
+func update_scorecard():
+	var scores = [die1_i, die2_i, die3_i, die4_i, die5_i]
+	var aces = scores.count(1)
+	var twos = scores.count(2) * 2
+	var threes = scores.count(3) * 3
+	var fours = scores.count(4) * 4
+	var fives = scores.count(5) * 5
+	var sixes = scores.count(6) * 6
+	scorecard.set_item_text(0, str(aces))
+	scorecard.set_item_text(1, str(twos))
+	scorecard.set_item_text(2, str(threes))
+	scorecard.set_item_text(3, str(fours))
+	scorecard.set_item_text(4, str(fives))
+	scorecard.set_item_text(5, str(sixes))

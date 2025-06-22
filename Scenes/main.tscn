@@ -83,4 +83,55 @@ offset_right = 55.0
 offset_bottom = 50.0
 text = "Roll"
 
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 408.0
+offset_top = 6.0
+offset_right = 596.0
+offset_bottom = 201.0
+
+[node name="ItemList2" type="ItemList" parent="Container"]
+offset_left = 79.0
+offset_top = 3.0
+offset_right = 169.0
+offset_bottom = 173.0
+item_count = 6
+item_0/text = "0"
+item_1/text = "0"
+item_2/text = "0"
+item_3/text = "0"
+item_4/text = "0"
+item_5/text = "0"
+
+[node name="ItemList" type="VBoxContainer" parent="Container"]
+offset_left = 8.0
+offset_top = 11.0
+offset_right = 92.0
+offset_bottom = 181.0
+
+[node name="Label" type="Label" parent="Container/ItemList"]
+layout_mode = 2
+text = "ACES"
+
+[node name="Label2" type="Label" parent="Container/ItemList"]
+layout_mode = 2
+text = "TWOS"
+
+[node name="Label3" type="Label" parent="Container/ItemList"]
+layout_mode = 2
+text = "THREES"
+
+[node name="Label4" type="Label" parent="Container/ItemList"]
+layout_mode = 2
+text = "FOURS"
+
+[node name="Label5" type="Label" parent="Container/ItemList"]
+layout_mode = 2
+text = "FIVES"
+
+[node name="Label6" type="Label" parent="Container/ItemList"]
+layout_mode = 2
+text = "SIXES"
+
 [connection signal="pressed" from="RollButton" to="Dice" method="_on_roll_button_pressed"]
