@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckdawaxgple8k"]
+
+[ext_resource type="Texture2D" uid="uid://q7i1qxpwkyj6" path="res://Sprites/die1.png" id="1_jjgbg"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Dice" type="Node2D" parent="."]
+
+[node name="Die1" type="Node2D" parent="Dice"]
+position = Vector2(127, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die1"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Die2" type="Node2D" parent="Dice"]
+position = Vector2(247, 65)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die2"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Die3" type="Node2D" parent="Dice"]
+position = Vector2(74, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die3"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Die4" type="Node2D" parent="Dice"]
+position = Vector2(187, 142)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die4"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Die5" type="Node2D" parent="Dice"]
+position = Vector2(305, 141)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die5"]
+texture = ExtResource("1_jjgbg")
