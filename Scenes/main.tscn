@@ -1,10 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckdawaxgple8k"]
+[gd_scene load_steps=3 format=3 uid="uid://ckdawaxgple8k"]
 
+[ext_resource type="Script" uid="uid://bcygjcf8gochr" path="res://Scripts/dice.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://q7i1qxpwkyj6" path="res://Sprites/die1.png" id="1_jjgbg"]
 
 [node name="Main" type="Node2D"]
+texture_filter = 1
 
 [node name="Dice" type="Node2D" parent="."]
+texture_filter = 1
+script = ExtResource("1_bo1nx")
 
 [node name="Die1" type="Node2D" parent="Dice"]
 position = Vector2(127, 64)
@@ -12,11 +16,25 @@ position = Vector2(127, 64)
 [node name="Sprite2D" type="Sprite2D" parent="Dice/Die1"]
 texture = ExtResource("1_jjgbg")
 
+[node name="Select" type="Button" parent="Dice/Die1"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
 [node name="Die2" type="Node2D" parent="Dice"]
 position = Vector2(247, 65)
 
 [node name="Sprite2D" type="Sprite2D" parent="Dice/Die2"]
 texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die2"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
 
 [node name="Die3" type="Node2D" parent="Dice"]
 position = Vector2(74, 144)
@@ -24,14 +42,45 @@ position = Vector2(74, 144)
 [node name="Sprite2D" type="Sprite2D" parent="Dice/Die3"]
 texture = ExtResource("1_jjgbg")
 
+[node name="Select" type="Button" parent="Dice/Die3"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
 [node name="Die4" type="Node2D" parent="Dice"]
 position = Vector2(187, 142)
 
 [node name="Sprite2D" type="Sprite2D" parent="Dice/Die4"]
 texture = ExtResource("1_jjgbg")
 
+[node name="Select" type="Button" parent="Dice/Die4"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
 [node name="Die5" type="Node2D" parent="Dice"]
 position = Vector2(305, 141)
 
 [node name="Sprite2D" type="Sprite2D" parent="Dice/Die5"]
 texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die5"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
+[node name="RollButton" type="Button" parent="."]
+texture_filter = 1
+offset_left = 18.0
+offset_top = 19.0
+offset_right = 55.0
+offset_bottom = 50.0
+text = "Roll"
+
+[connection signal="pressed" from="RollButton" to="Dice" method="_on_roll_button_pressed"]
