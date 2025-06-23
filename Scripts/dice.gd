@@ -48,15 +48,13 @@ func _on_roll_button_pressed():
 	
 func update_scorecard():
 	var scores = [die1_i, die2_i, die3_i, die4_i, die5_i]
-	var aces = scores.count(1)
-	var twos = scores.count(2) * 2
-	var threes = scores.count(3) * 3
-	var fours = scores.count(4) * 4
-	var fives = scores.count(5) * 5
-	var sixes = scores.count(6) * 6
-	scorecard.set_item_text(0, str(aces))
-	scorecard.set_item_text(1, str(twos))
-	scorecard.set_item_text(2, str(threes))
-	scorecard.set_item_text(3, str(fours))
-	scorecard.set_item_text(4, str(fives))
-	scorecard.set_item_text(5, str(sixes))
+	var index = 0
+	while index < 6:
+		print(index)
+		scorecard.set_item_text(index, str(scores.count((index + 1)) * (index + 1)))
+		index += 1
+
+
+func _on_item_list_2_item_selected(index):
+	scorecard.set_item_selectable(index, false)
+	scorecard.set_item_disabled(index, false)

@@ -92,6 +92,7 @@ offset_right = 596.0
 offset_bottom = 201.0
 
 [node name="ItemList2" type="ItemList" parent="Container"]
+layout_mode = 0
 offset_left = 79.0
 offset_top = 3.0
 offset_right = 169.0
@@ -105,6 +106,7 @@ item_4/text = "0"
 item_5/text = "0"
 
 [node name="ItemList" type="VBoxContainer" parent="Container"]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 11.0
 offset_right = 92.0
@@ -135,3 +137,4 @@ layout_mode = 2
 text = "SIXES"
 
 [connection signal="pressed" from="RollButton" to="Dice" method="_on_roll_button_pressed"]
+[connection signal="item_selected" from="Container/ItemList2" to="Dice" method="_on_item_list_2_item_selected"]
