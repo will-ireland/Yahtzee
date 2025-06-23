@@ -50,26 +50,59 @@ func _on_roll_button_pressed():
 	
 func update_scorecard():
 	var scores = [die1_i, die2_i, die3_i, die4_i, die5_i]
+	var score_counts = []
+	var sum = die1_i + die2_i + die3_i + die4_i + die5_i
+	
+#	resets scores to 0
 	var index = 0
-	while index < 6:
-		print(index)
-		if upper_scorecard.is_item_selectable(index):
-			upper_scorecard.set_item_text(index, str(scores.count((index + 1)) * (index + 1)))
+	while index < 7:
+		if index < 6:
+			upper_scorecard.set_item_text(index, "0")
+		lower_scorecard.set_item_text(index, "0")
 		index += 1
-	var straights = straight_finder(scores)
+
+#	upper scorecard
+	index = 0
+	while index < 6:
+		score_counts.append(scores.count(index + 1))
+		if upper_scorecard.is_item_selectable(index):
+			upper_scorecard.set_item_text(index, str(score_counts[-1] * (index + 1)))
+		index += 1
+	
+#	3/4/5
+	if score_counts.max() >= 3:
+		lower_scorecard.set_item_text(0, str(sum))
+		if score_counts.max() >= 4:
+			lower_scorecard.set_item_text(1, str(sum))
+			if score_counts.max() == 5:
+				lower_scorecard.set_item_text(5, "50")
+		
+	if score_counts.has(3) and score_counts.has(2):
+		lower_scorecard.set_item_text(2, "25")
+	
+#	straights
+	var straights = straight_finder(scores, score_counts)
 	if straights[0]:
 		lower_scorecard.set_item_text(3, "30")
-	else:
-		lower_scorecard.set_item_text(3, "0")
 	if straights[1]:
 		lower_scorecard.set_item_text(4, "40")
-	else:
-		lower_scorecard.set_item_text(4, "0")
-func straight_finder(scores):
+		
+	lower_scorecard.set_item_text(6, str(sum))
+		
+func straight_finder(scores, score_counts):
 	scores.sort()
-	var index = 0
 	var lrg_straight = true
 	var sml_straight = true
+	var index = 0
+	
+#	early detection of straights, and removes duplicate numbers to assist with straight calculation
+	if score_counts.has(2):
+		lrg_straight = false
+		scores.erase(score_counts.find(2) + 1)
+	if score_counts.has(3) or score_counts.has(4) or score_counts.has(5):
+		lrg_straight = false
+		sml_straight = false
+	index = 0
 	while index < scores.size() - 1:
 		if scores[index] + 1 != scores[index + 1]:
 			lrg_straight = false
