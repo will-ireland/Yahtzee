@@ -25,7 +25,7 @@ var die6_sprite = preload("res://Sprites/die6.png")
 
 func _ready():
 	roll_button = find_child("RollButton")
-	scorecard = $"../Container/ItemList2"
+	scorecard = $"../Container/UpperScores"
 	die1 = find_child("Die1")
 	die2 = find_child("Die2")
 	die3 = find_child("Die3")
@@ -51,10 +51,11 @@ func update_scorecard():
 	var index = 0
 	while index < 6:
 		print(index)
-		scorecard.set_item_text(index, str(scores.count((index + 1)) * (index + 1)))
+		if scorecard.is_item_selectable(index):
+			scorecard.set_item_text(index, str(scores.count((index + 1)) * (index + 1)))
 		index += 1
 
-
-func _on_item_list_2_item_selected(index):
+func _on_upper_scores_item_selected(index):
 	scorecard.set_item_selectable(index, false)
 	scorecard.set_item_disabled(index, false)
+	scorecard.deselect(index)
