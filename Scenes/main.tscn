@@ -191,3 +191,4 @@ item_6/text = "0"
 
 [connection signal="pressed" from="RollButton" to="Dice" method="_on_roll_button_pressed"]
 [connection signal="item_selected" from="Container/UpperScores" to="Dice" method="_on_upper_scores_item_selected"]
+[connection signal="item_selected" from="Container/LowerScores" to="Dice" method="_on_lower_scores_item_selected"]

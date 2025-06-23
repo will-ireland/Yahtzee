@@ -2,7 +2,8 @@ extends Node2D
 
 var roll_button : Button
 
-var scorecard : ItemList
+var upper_scorecard : ItemList
+var lower_scorecard : ItemList
 
 var die1 : Node2D
 var die2 : Node2D 
@@ -25,7 +26,8 @@ var die6_sprite = preload("res://Sprites/die6.png")
 
 func _ready():
 	roll_button = find_child("RollButton")
-	scorecard = $"../Container/UpperScores"
+	upper_scorecard = $"../Container/UpperScores"
+	lower_scorecard = $"../Container/LowerScores"
 	die1 = find_child("Die1")
 	die2 = find_child("Die2")
 	die3 = find_child("Die3")
@@ -51,11 +53,38 @@ func update_scorecard():
 	var index = 0
 	while index < 6:
 		print(index)
-		if scorecard.is_item_selectable(index):
-			scorecard.set_item_text(index, str(scores.count((index + 1)) * (index + 1)))
+		if upper_scorecard.is_item_selectable(index):
+			upper_scorecard.set_item_text(index, str(scores.count((index + 1)) * (index + 1)))
 		index += 1
+	var straights = straight_finder(scores)
+	if straights[0]:
+		lower_scorecard.set_item_text(3, "30")
+	else:
+		lower_scorecard.set_item_text(3, "0")
+	if straights[1]:
+		lower_scorecard.set_item_text(4, "40")
+	else:
+		lower_scorecard.set_item_text(4, "0")
+func straight_finder(scores):
+	scores.sort()
+	var index = 0
+	var lrg_straight = true
+	var sml_straight = true
+	while index < scores.size() - 1:
+		if scores[index] + 1 != scores[index + 1]:
+			lrg_straight = false
+			if index > 0:
+				sml_straight = false
+		index += 1
+	return [sml_straight, lrg_straight]
 
 func _on_upper_scores_item_selected(index):
-	scorecard.set_item_selectable(index, false)
-	scorecard.set_item_disabled(index, false)
-	scorecard.deselect(index)
+	upper_scorecard.set_item_selectable(index, false)
+	upper_scorecard.set_item_disabled(index, false)
+	upper_scorecard.deselect(index)
+
+
+func _on_lower_scores_item_selected(index):
+	lower_scorecard.set_item_selectable(index, false)
+	lower_scorecard.set_item_disabled(index, false)
+	lower_scorecard.deselect(index)
