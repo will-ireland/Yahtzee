@@ -142,6 +142,22 @@ func straight_finder(scores, score_counts):
 		lrg_straight = false
 		sml_straight = false
 	return [sml_straight, lrg_straight]
+	
+func reset_turn():
+	var dice = get_children()
+	var index = 0
+	while index < dice.size():
+		dice[index].find_child("Select").set_pressed_no_signal(false)
+		index += 1
+	index = 0
+	while index < 7:
+		if index < 6:
+			if upper_scorecard.is_item_selectable(index):
+				upper_scorecard.set_item_text(index, "0")
+		if lower_scorecard.is_item_selectable(index):
+			lower_scorecard.set_item_text(index, "0")
+		index += 1
+	
 
 func _on_upper_scores_item_selected(index):
 	upper_scorecard.set_item_selectable(index, false)
@@ -151,6 +167,7 @@ func _on_upper_scores_item_selected(index):
 	roll_counter.text = str(rolls)
 	upper_sum += int(upper_scorecard.get_item_text(index))
 	upper_total.text = str(upper_sum)
+	reset_turn()
 
 
 func _on_lower_scores_item_selected(index):
@@ -161,3 +178,4 @@ func _on_lower_scores_item_selected(index):
 	roll_counter.text = str(rolls)
 	lower_sum += int(lower_scorecard.get_item_text(index))
 	lower_total.text = str(lower_sum)
+	reset_turn()
