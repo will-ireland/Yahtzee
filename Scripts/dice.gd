@@ -31,6 +31,7 @@ var lower_total : Label
 var upper_sum : int
 var lower_sum : int
 var turn : int
+var yahtzee : bool
 
 var buttons_disabled : bool
 
@@ -55,6 +56,7 @@ func _ready():
 	upper_sum = 0
 	lower_sum = 0
 	turn = 0
+	yahtzee = false
 	buttons_disabled = true
 	disable_dice()
 
@@ -74,6 +76,7 @@ func _on_roll_button_pressed():
 		update_scorecard()
 	
 func update_scorecard():
+	yahtzee = false
 	var scores = [die1_i, die2_i, die3_i, die4_i, die5_i]
 	var score_counts = []
 	var sum = die1_i + die2_i + die3_i + die4_i + die5_i
@@ -104,19 +107,18 @@ func update_scorecard():
 			if lower_scorecard.is_item_selectable(1):
 				lower_scorecard.set_item_text(1, str(sum))
 			if score_counts.max() == 5:
-				if lower_scorecard.is_item_selectable(5):
-					lower_scorecard.set_item_text(5, "50")
+				yahtzee_calculator(sum)
 		
-	if score_counts.has(3) and score_counts.has(2):
+	if (score_counts.has(3) and score_counts.has(2)) or yahtzee:
 		if lower_scorecard.is_item_selectable(2):
 			lower_scorecard.set_item_text(2, "25")
 	
 #	straights
 	var straights = straight_finder(scores, score_counts)
-	if straights[0]:
+	if straights[0] or yahtzee:
 		if lower_scorecard.is_item_selectable(3):
 			lower_scorecard.set_item_text(3, "30")
-	if straights[1]:
+	if straights[1] or yahtzee:
 		if lower_scorecard.is_item_selectable(4):
 			lower_scorecard.set_item_text(4, "40")
 	
@@ -151,6 +153,13 @@ func straight_finder(scores, score_counts):
 		lrg_straight = false
 		sml_straight = false
 	return [sml_straight, lrg_straight]
+	
+func yahtzee_calculator(sum):
+	if lower_scorecard.is_item_selectable(5):
+		lower_scorecard.set_item_text(5, "50")
+	elif lower_scorecard.get_item_text(5) == "50":
+		yahtzee = true
+		
 	
 func reset_turn():
 	var dice = get_children()
@@ -190,6 +199,9 @@ func _on_upper_scores_item_selected(index):
 	roll_counter.text = str(rolls)
 	upper_sum += int(upper_scorecard.get_item_text(index))
 	upper_total.text = str(upper_sum)
+	if yahtzee:
+		lower_sum += 100
+		lower_total.text = str(lower_sum)
 	turn += 1
 	if turn < 13:
 		reset_turn()
@@ -203,6 +215,8 @@ func _on_lower_scores_item_selected(index):
 	rolls = 3
 	roll_counter.text = str(rolls)
 	lower_sum += int(lower_scorecard.get_item_text(index))
+	if yahtzee:
+		lower_sum += 100
 	lower_total.text = str(lower_sum)
 	turn += 1
 	reset_turn()
