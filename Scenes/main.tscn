@@ -1,0 +1,269 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckdawaxgple8k"]
+
+[ext_resource type="Script" uid="uid://bcygjcf8gochr" path="res://Scripts/dice.gd" id="1_bo1nx"]
+[ext_resource type="Texture2D" uid="uid://q7i1qxpwkyj6" path="res://Sprites/die1.png" id="1_jjgbg"]
+
+[node name="Main" type="Node2D"]
+texture_filter = 1
+
+[node name="Dice" type="Node2D" parent="."]
+texture_filter = 1
+script = ExtResource("1_bo1nx")
+
+[node name="Die1" type="Node2D" parent="Dice"]
+position = Vector2(127, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die1"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die1"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
+[node name="Die2" type="Node2D" parent="Dice"]
+position = Vector2(247, 65)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die2"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die2"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
+[node name="Die3" type="Node2D" parent="Dice"]
+position = Vector2(74, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die3"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die3"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
+[node name="Die4" type="Node2D" parent="Dice"]
+position = Vector2(187, 142)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die4"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die4"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
+[node name="Die5" type="Node2D" parent="Dice"]
+position = Vector2(305, 141)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dice/Die5"]
+texture = ExtResource("1_jjgbg")
+
+[node name="Select" type="Button" parent="Dice/Die5"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+toggle_mode = true
+
+[node name="RollButton" type="Button" parent="."]
+texture_filter = 1
+offset_left = 14.0
+offset_top = 219.0
+offset_right = 51.0
+offset_bottom = 250.0
+text = "Roll"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RollButton"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 24.0
+offset_right = 89.0
+offset_bottom = 64.0
+
+[node name="Label" type="Label" parent="RollButton/HBoxContainer"]
+layout_mode = 2
+text = "Rolls left:"
+
+[node name="RollCounter" type="Label" parent="RollButton/HBoxContainer"]
+layout_mode = 2
+text = "3"
+
+[node name="Scorecard" type="HBoxContainer" parent="."]
+offset_left = 408.0
+offset_top = 6.0
+offset_right = 720.0
+offset_bottom = 203.0
+
+[node name="Upper" type="VBoxContainer" parent="Scorecard"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Scorecard/Upper"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scorecard/Upper"]
+layout_mode = 2
+text = "ACES"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="Scorecard/Upper"]
+layout_mode = 2
+text = "TWOS"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="Scorecard/Upper"]
+layout_mode = 2
+text = "THREES"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="Scorecard/Upper"]
+layout_mode = 2
+text = "FOURS"
+horizontal_alignment = 2
+
+[node name="Label5" type="Label" parent="Scorecard/Upper"]
+layout_mode = 2
+text = "FIVES"
+horizontal_alignment = 2
+
+[node name="Label6" type="Label" parent="Scorecard/Upper"]
+layout_mode = 2
+text = "SIXES"
+horizontal_alignment = 2
+
+[node name="UpperScores" type="ItemList" parent="Scorecard"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 6
+item_0/text = "0"
+item_1/text = "0"
+item_2/text = "0"
+item_3/text = "0"
+item_4/text = "0"
+item_5/text = "0"
+
+[node name="Lower" type="VBoxContainer" parent="Scorecard"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Scorecard/Lower"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "3 OF A KIND"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "4 OF A KIND"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "FULL HOUSE"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "SMALL STRAIGHT"
+horizontal_alignment = 2
+
+[node name="Label5" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "LARGE STRAIGHT"
+horizontal_alignment = 2
+
+[node name="Label6" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "YAHTZEE"
+horizontal_alignment = 2
+
+[node name="Label7" type="Label" parent="Scorecard/Lower"]
+layout_mode = 2
+text = "CHANCE"
+horizontal_alignment = 2
+
+[node name="LowerScores" type="ItemList" parent="Scorecard"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 7
+item_0/text = "0"
+item_1/text = "0"
+item_2/text = "0"
+item_3/text = "0"
+item_4/text = "0"
+item_5/text = "0"
+item_6/text = "0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 375.0
+offset_top = 215.0
+offset_right = 485.0
+offset_bottom = 255.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Upper Total:"
+
+[node name="UpperTotal" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+offset_left = 568.0
+offset_top = 216.0
+offset_right = 678.0
+offset_bottom = 256.0
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Lower Total:"
+
+[node name="LowerTotal" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "0"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+offset_left = 416.0
+offset_top = 272.0
+offset_right = 526.0
+offset_bottom = 312.0
+
+[node name="Label" type="Label" parent="HBoxContainer3"]
+layout_mode = 2
+text = "Bonus:"
+
+[node name="Bonus" type="Label" parent="HBoxContainer3"]
+layout_mode = 2
+text = "0"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+offset_left = 548.0
+offset_top = 270.0
+offset_right = 678.0
+offset_bottom = 310.0
+
+[node name="Label" type="Label" parent="HBoxContainer4"]
+layout_mode = 2
+text = "GRAND TOTAL:"
+
+[node name="Total" type="Label" parent="HBoxContainer4"]
+layout_mode = 2
+text = "0"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(370, 172)
+zoom = Vector2(1.5, 1.5)
+
+[connection signal="pressed" from="RollButton" to="Dice" method="_on_roll_button_pressed"]
+[connection signal="item_selected" from="Scorecard/UpperScores" to="Dice" method="_on_upper_scores_item_selected"]
+[connection signal="item_selected" from="Scorecard/LowerScores" to="Dice" method="_on_lower_scores_item_selected"]
