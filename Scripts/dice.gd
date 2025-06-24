@@ -219,4 +219,7 @@ func _on_lower_scores_item_selected(index):
 		lower_sum += 100
 	lower_total.text = str(lower_sum)
 	turn += 1
-	reset_turn()
+	if turn < 13:
+		reset_turn()
+	else:
+		endgame()
