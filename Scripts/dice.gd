@@ -25,11 +25,16 @@ var die5_sprite = preload("res://Sprites/die5.png")
 var die6_sprite = preload("res://Sprites/die6.png")
 
 var rolls
+var roll_counter : Label
+var upper_total : Label
+var lower_total : Label
+var upper_sum : int
+var lower_sum : int
 
 func _ready():
 	roll_button = find_child("RollButton")
-	upper_scorecard = $"../Container/UpperScores"
-	lower_scorecard = $"../Container/LowerScores"
+	upper_scorecard = $"../Scorecard/UpperScores"
+	lower_scorecard = $"../Scorecard/LowerScores"
 	die1 = find_child("Die1")
 	die2 = find_child("Die2")
 	die3 = find_child("Die3")
@@ -41,15 +46,23 @@ func _ready():
 	die4_i = 0
 	die5_i = 0
 	rolls = 3
+	roll_counter = $"../RollButton/HBoxContainer/RollCounter"
+	upper_total = $"../HBoxContainer/UpperTotal"
+	lower_total = $"../HBoxContainer2/LowerTotal"
+	upper_sum = 0
+	lower_sum = 0
 
 func _on_roll_button_pressed():
-	var i = 1
-	while i < 6:
-		if get("die" + str(i)).find_child("Select").button_pressed == false:
-			set("die" + str(i) + "_i", randi_range(1, 6))
-			get("die" + str(i)).find_child("Sprite2D").texture = get("die" + str(get("die" + str(i) + "_i")) + "_sprite")
-		i += 1
-	update_scorecard()
+	if rolls > 0:
+		rolls -= 1
+		roll_counter.text = str(rolls)
+		var i = 1
+		while i < 6:
+			if get("die" + str(i)).find_child("Select").button_pressed == false:
+				set("die" + str(i) + "_i", randi_range(1, 6))
+				get("die" + str(i)).find_child("Sprite2D").texture = get("die" + str(get("die" + str(i) + "_i")) + "_sprite")
+			i += 1
+		update_scorecard()
 	
 func update_scorecard():
 	var scores = [die1_i, die2_i, die3_i, die4_i, die5_i]
@@ -108,28 +121,43 @@ func straight_finder(scores, score_counts):
 	var index = 0
 	
 #	early detection of straights, and removes duplicate numbers to assist with straight calculation
-	if score_counts.has(2):
-		lrg_straight = false
-		scores.erase(score_counts.find(2) + 1)
 	if score_counts.has(3) or score_counts.has(4) or score_counts.has(5):
 		lrg_straight = false
 		sml_straight = false
+	elif score_counts.has(2):
+		lrg_straight = false
+		while score_counts.find(2) != -1:
+			scores.erase(score_counts.find(2) + 1)
+			score_counts[score_counts.find(2)] = 0
+	
 	index = 0
-	while index < scores.size() - 1:
-		if scores[index] + 1 != scores[index + 1]:
-			lrg_straight = false
-			if index > 0:
-				sml_straight = false
-		index += 1
+	if scores.size() > 3:
+		while index < scores.size() - 1:
+			if scores[index] + 1 != scores[index + 1]:
+				lrg_straight = false
+				if index > 0 or scores.size() == 4:
+					sml_straight = false
+			index += 1
+	else:
+		lrg_straight = false
+		sml_straight = false
 	return [sml_straight, lrg_straight]
 
 func _on_upper_scores_item_selected(index):
 	upper_scorecard.set_item_selectable(index, false)
 	upper_scorecard.set_item_disabled(index, false)
 	upper_scorecard.deselect(index)
+	rolls = 3
+	roll_counter.text = str(rolls)
+	upper_sum += int(upper_scorecard.get_item_text(index))
+	upper_total.text = str(upper_sum)
 
 
 func _on_lower_scores_item_selected(index):
 	lower_scorecard.set_item_selectable(index, false)
 	lower_scorecard.set_item_disabled(index, false)
 	lower_scorecard.deselect(index)
+	rolls = 3
+	roll_counter.text = str(rolls)
+	lower_sum += int(lower_scorecard.get_item_text(index))
+	lower_total.text = str(lower_sum)
