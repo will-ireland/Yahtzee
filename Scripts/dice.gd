@@ -30,6 +30,9 @@ var upper_total : Label
 var lower_total : Label
 var upper_sum : int
 var lower_sum : int
+var turn : int
+
+var buttons_disabled : bool
 
 func _ready():
 	roll_button = find_child("RollButton")
@@ -51,8 +54,14 @@ func _ready():
 	lower_total = $"../HBoxContainer2/LowerTotal"
 	upper_sum = 0
 	lower_sum = 0
+	turn = 0
+	buttons_disabled = true
+	disable_dice()
 
 func _on_roll_button_pressed():
+	if buttons_disabled:
+		buttons_disabled = false
+		disable_dice()
 	if rolls > 0:
 		rolls -= 1
 		roll_counter.text = str(rolls)
@@ -157,7 +166,21 @@ func reset_turn():
 		if lower_scorecard.is_item_selectable(index):
 			lower_scorecard.set_item_text(index, "0")
 		index += 1
+	buttons_disabled = true
+	disable_dice()
 	
+func endgame():
+	if upper_sum >= 63:
+		$"../HBoxContainer3/Bonus".text = "35"
+		upper_sum += 35
+	$"../HBoxContainer4/Total".text = str(upper_sum + lower_sum)
+
+func disable_dice():
+	var dice = get_children()
+	var index = 0
+	while index < dice.size():
+		dice[index].find_child("Select").disabled = buttons_disabled
+		index += 1
 
 func _on_upper_scores_item_selected(index):
 	upper_scorecard.set_item_selectable(index, false)
@@ -167,8 +190,11 @@ func _on_upper_scores_item_selected(index):
 	roll_counter.text = str(rolls)
 	upper_sum += int(upper_scorecard.get_item_text(index))
 	upper_total.text = str(upper_sum)
-	reset_turn()
-
+	turn += 1
+	if turn < 13:
+		reset_turn()
+	else:
+		endgame()
 
 func _on_lower_scores_item_selected(index):
 	lower_scorecard.set_item_selectable(index, false)
@@ -178,4 +204,5 @@ func _on_lower_scores_item_selected(index):
 	roll_counter.text = str(rolls)
 	lower_sum += int(lower_scorecard.get_item_text(index))
 	lower_total.text = str(lower_sum)
+	turn += 1
 	reset_turn()
