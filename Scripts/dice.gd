@@ -24,6 +24,8 @@ var die4_sprite = preload("res://Sprites/die4.png")
 var die5_sprite = preload("res://Sprites/die5.png")
 var die6_sprite = preload("res://Sprites/die6.png")
 
+var rolls
+
 func _ready():
 	roll_button = find_child("RollButton")
 	upper_scorecard = $"../Container/UpperScores"
@@ -38,6 +40,7 @@ func _ready():
 	die3_i = 0
 	die4_i = 0
 	die5_i = 0
+	rolls = 3
 
 func _on_roll_button_pressed():
 	var i = 1
@@ -57,8 +60,10 @@ func update_scorecard():
 	var index = 0
 	while index < 7:
 		if index < 6:
-			upper_scorecard.set_item_text(index, "0")
-		lower_scorecard.set_item_text(index, "0")
+			if upper_scorecard.is_item_selectable(index):
+				upper_scorecard.set_item_text(index, "0")
+		if lower_scorecard.is_item_selectable(index):
+			lower_scorecard.set_item_text(index, "0")
 		index += 1
 
 #	upper scorecard
@@ -71,23 +76,30 @@ func update_scorecard():
 	
 #	3/4/5
 	if score_counts.max() >= 3:
-		lower_scorecard.set_item_text(0, str(sum))
+		if lower_scorecard.is_item_selectable(0):
+				lower_scorecard.set_item_text(0, str(sum))
 		if score_counts.max() >= 4:
-			lower_scorecard.set_item_text(1, str(sum))
+			if lower_scorecard.is_item_selectable(1):
+				lower_scorecard.set_item_text(1, str(sum))
 			if score_counts.max() == 5:
-				lower_scorecard.set_item_text(5, "50")
+				if lower_scorecard.is_item_selectable(5):
+					lower_scorecard.set_item_text(5, "50")
 		
 	if score_counts.has(3) and score_counts.has(2):
-		lower_scorecard.set_item_text(2, "25")
+		if lower_scorecard.is_item_selectable(2):
+			lower_scorecard.set_item_text(2, "25")
 	
 #	straights
 	var straights = straight_finder(scores, score_counts)
 	if straights[0]:
-		lower_scorecard.set_item_text(3, "30")
+		if lower_scorecard.is_item_selectable(3):
+			lower_scorecard.set_item_text(3, "30")
 	if straights[1]:
-		lower_scorecard.set_item_text(4, "40")
-		
-	lower_scorecard.set_item_text(6, str(sum))
+		if lower_scorecard.is_item_selectable(4):
+			lower_scorecard.set_item_text(4, "40")
+	
+	if lower_scorecard.is_item_selectable(6):
+		lower_scorecard.set_item_text(6, str(sum))
 		
 func straight_finder(scores, score_counts):
 	scores.sort()
